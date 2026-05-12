@@ -4,6 +4,10 @@ This is a lightweight static site for testing whether search traffic can convert
 
 ## Local URLs
 
+Live site:
+
+`https://novawuyiting.github.io/soundon-discoveries/`
+
 Open the hub:
 
 `/Users/bytedance/Documents/New project/index.html`
@@ -27,11 +31,6 @@ Open the Vibe Coding page:
 - `deep work playlist`
 
 ## Measurement
-
-Before publishing, replace the placeholder canonical and Open Graph URLs in:
-
-- `index.html`
-- `vibe-coding-focus/index.html`
 
 Record baseline before sharing the page:
 
