@@ -343,6 +343,39 @@ main {
   line-height: 1.55;
 }
 
+.homepage-track-list {
+  margin: 0;
+  padding: 8px 24px 24px;
+  list-style: none;
+}
+
+.homepage-track-list li {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+}
+
+.homepage-track-list strong,
+.homepage-track-list em {
+  display: block;
+  font-style: normal;
+}
+
+.homepage-track-list strong {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.homepage-track-list em,
+.homepage-track-list time {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .future-panel {
   min-height: 220px;
 }
