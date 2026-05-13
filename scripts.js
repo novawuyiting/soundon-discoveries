@@ -2,16 +2,27 @@ const clickLinks = document.querySelectorAll(".js-spotify-click");
 
 clickLinks.forEach((link) => {
   link.addEventListener("click", () => {
+    const playlist = link.dataset.playlist || "unknown";
+    const clickArea = link.dataset.clickArea || "unknown";
     const event = {
       event: "spotify_playlist_click",
-      playlist: link.dataset.playlist || "unknown",
-      area: link.dataset.clickArea || "unknown",
+      playlist,
+      area: clickArea,
       path: window.location.pathname,
       timestamp: new Date().toISOString()
     };
 
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(event);
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "spotify_playlist_click", {
+        playlist,
+        click_area: clickArea,
+        page_path: window.location.pathname,
+        link_url: link.href
+      });
+    }
 
     const previous = JSON.parse(localStorage.getItem("spotify_click_events") || "[]");
     previous.push(event);
