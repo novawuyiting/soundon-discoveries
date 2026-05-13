@@ -79,10 +79,10 @@ main {
 
 .hero,
 .hub-hero {
-  min-height: calc(100vh - 82px);
+  min-height: min(760px, calc(100vh - 82px));
   display: grid;
   align-items: center;
-  padding: 44px 0 72px;
+  padding: 36px 0 64px;
 }
 
 .hero {
@@ -91,16 +91,16 @@ main {
 }
 
 .hub-hero {
-  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.85fr);
-  gap: 56px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.8fr);
+  gap: 44px;
 }
 
 .hero-copy h1,
 .hub-hero h1 {
   max-width: 780px;
   margin: 0;
-  font-size: clamp(48px, 7vw, 92px);
-  line-height: 0.94;
+  font-size: clamp(46px, 6.2vw, 82px);
+  line-height: 0.96;
   letter-spacing: 0;
 }
 
@@ -250,7 +250,6 @@ main {
 
 .intent-section,
 .copy-section,
-.playlist-index,
 .method-section,
 .related-section,
 .featured-playlists {
@@ -278,54 +277,20 @@ main {
 }
 
 .section-heading p {
-  max-width: 360px;
+  max-width: 430px;
   margin: 0;
   color: var(--muted);
   font-size: 16px;
   line-height: 1.55;
 }
 
-.playlist-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 34px;
-}
-
-.playlist-card {
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 22px;
-  background: linear-gradient(180deg, var(--panel-strong), rgba(21, 23, 29, 0.72));
-}
-
-.playlist-card.is-live {
-  border-color: rgba(85, 240, 196, 0.36);
-}
-
 .status {
   display: block;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   color: var(--accent);
   font-size: 13px;
   font-weight: 800;
   text-transform: uppercase;
-}
-
-.playlist-card h3 {
-  margin: 0;
-  font-size: 24px;
-  line-height: 1.1;
-}
-
-.playlist-card p {
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.6;
 }
 
 .card-actions {
@@ -376,6 +341,10 @@ main {
   color: var(--muted);
   font-size: 16px;
   line-height: 1.55;
+}
+
+.future-panel {
+  min-height: 220px;
 }
 
 .intent-grid {
@@ -440,7 +409,6 @@ footer {
   }
 
   .embed-grid,
-  .playlist-grid,
   .intent-grid {
     grid-template-columns: 1fr;
   }

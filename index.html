@@ -39,7 +39,6 @@
       <a class="brand" href="./index.html">SoundOn Discoveries</a>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="#playlists">Playlists</a>
-        <a href="#featured">Featured</a>
         <a href="#method">Method</a>
       </nav>
     </header>
@@ -54,7 +53,7 @@
           </p>
           <div class="actions">
             <a class="button primary js-spotify-click" href="https://open.spotify.com/playlist/3ZIUmDpthWUewZjOzSIU5m?utm_source=soundon_discoveries&utm_medium=homepage_hero&utm_campaign=vibe_coding_focus" data-playlist="vibe_coding_focus" data-click-area="homepage-hero">Save on Spotify</a>
-            <a class="button secondary" href="#featured">Preview tracks</a>
+            <a class="button secondary" href="#playlists">Preview tracks</a>
           </div>
         </div>
         <article class="hero-playlist-card" aria-label="Vibe Coding Focus playlist preview">
@@ -79,59 +78,16 @@
         </article>
       </section>
 
-      <section class="playlist-index" id="playlists" aria-labelledby="playlists-title">
+      <section class="featured-playlists" id="playlists" aria-labelledby="playlists-title">
         <div class="section-heading">
           <h2 id="playlists-title">Featured playlist tests</h2>
-          <p>Each playlist gets its own search page, Spotify CTA, and measurement loop.</p>
-        </div>
-
-        <div class="playlist-grid">
-          <article class="playlist-card is-live">
-            <div>
-              <span class="status">Live test</span>
-              <h3>Vibe Coding Focus</h3>
-              <p>Music for AI coding, Cursor sessions, debugging loops, late-night prompts, and deep work.</p>
-            </div>
-            <div class="card-actions">
-              <a class="text-link" href="./vibe-coding-focus/">SEO page</a>
-              <a class="text-link js-spotify-click" href="https://open.spotify.com/playlist/3ZIUmDpthWUewZjOzSIU5m?utm_source=soundon_discoveries&utm_medium=hub&utm_campaign=vibe_coding_focus" data-playlist="vibe_coding_focus" data-click-area="hub-card">Spotify</a>
-            </div>
-          </article>
-
-          <article class="playlist-card is-live">
-            <div>
-              <span class="status">Build in progress</span>
-              <h3>Let's Xianhua | Manifestation Vibes</h3>
-              <p>Positive energy, self-love, money mindset, lucky girl energy, and songs for becoming the version of you who already has it.</p>
-            </div>
-            <div class="card-actions">
-              <a class="text-link" href="./lets-xianhua-manifestation-vibes/">SEO page</a>
-              <a class="text-link js-spotify-click" href="https://open.spotify.com/playlist/2Q86ayesV1V4Fw3EGYvf8D?utm_source=soundon_discoveries&utm_medium=hub&utm_campaign=manifestation_vibes" data-playlist="manifestation_vibes" data-click-area="hub-card">Spotify</a>
-            </div>
-          </article>
-
-          <article class="playlist-card">
-            <div>
-              <span class="status">Future test</span>
-              <h3>Fresh US Indie Finds</h3>
-              <p>A broader discovery lane for emerging US indie, alt pop, dark pop, and left-field tracks worth finding early.</p>
-            </div>
-            <div class="card-actions">
-              <span class="text-muted">Not live yet</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="featured-playlists" id="featured" aria-labelledby="featured-title">
-        <div class="section-heading">
-          <h2 id="featured-title">Preview before you leave the page</h2>
-          <p>Track lists and Spotify actions are embedded here to keep the funnel short.</p>
+          <p>Preview tracks, save on Spotify, or open the full SEO page from one place.</p>
         </div>
 
         <div class="embed-grid">
           <article class="embed-panel">
             <div class="embed-panel-copy">
+              <span class="status">Live test</span>
               <h3>Vibe Coding Focus</h3>
               <p>AI coding, Cursor sessions, debugging loops, late-night prompts, and deep work.</p>
               <div class="card-actions">
@@ -155,6 +111,7 @@
 
           <article class="embed-panel">
             <div class="embed-panel-copy">
+              <span class="status">Build in progress</span>
               <h3>Let's Xianhua | Manifestation Vibes</h3>
               <p>显化, lucky girl energy, self-love, money mindset, and soft confidence.</p>
               <div class="card-actions">
@@ -173,6 +130,17 @@
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy">
               </iframe>
+            </div>
+          </article>
+
+          <article class="embed-panel future-panel">
+            <div class="embed-panel-copy">
+              <span class="status">Future test</span>
+              <h3>Fresh US Indie Finds</h3>
+              <p>A broader discovery lane for emerging US indie, alt pop, dark pop, and left-field tracks worth finding early.</p>
+              <div class="card-actions">
+                <span class="text-muted">Not live yet</span>
+              </div>
             </div>
           </article>
         </div>
