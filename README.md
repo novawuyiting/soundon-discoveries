@@ -16,9 +16,17 @@ Open the Vibe Coding page:
 
 `/Users/bytedance/Documents/New project/vibe-coding-focus/index.html`
 
+Open the Manifestation page:
+
+`/Users/bytedance/Documents/New project/lets-xianhua-manifestation-vibes/index.html`
+
 ## Primary Keyword
 
 `vibe coding playlist`
+
+Second keyword test:
+
+`manifestation playlist`
 
 ## Supporting Keywords
 
@@ -29,6 +37,10 @@ Open the Vibe Coding page:
 - `music for coding with AI`
 - `focus music for programming`
 - `deep work playlist`
+- `manifestation playlist`
+- `显化 playlist`
+- `lucky girl playlist`
+- `self love songs`
 
 ## Measurement
 
@@ -67,3 +79,7 @@ If the page gets clicks but not streams, improve playlist ordering and first 10 
 If the page gets impressions but few clicks, rewrite the title/meta description.
 
 If the page gets no impressions, create two support posts targeting `AI coding music` and `Cursor coding playlist`.
+
+## Social Plan
+
+See `social-media-plan.md` for the current X, Reddit, and GitHub launch plan.
