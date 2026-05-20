@@ -380,6 +380,25 @@ main {
   min-height: 220px;
 }
 
+.video-panel {
+  border-color: rgba(255, 106, 95, 0.32);
+}
+
+.youtube-embed {
+  overflow: hidden;
+  margin: 0 24px 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.youtube-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
 .intent-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
