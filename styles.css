@@ -295,9 +295,22 @@ main {
 
 .card-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   align-items: center;
   margin-top: 28px;
+}
+
+.share-button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.share-button.is-copied {
+  color: var(--text);
 }
 
 .text-muted {
@@ -391,10 +404,11 @@ main {
 .phonk-cover-preview img {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 16 / 9;
   border: 1px solid rgba(85, 240, 196, 0.26);
   border-radius: 8px;
   object-fit: cover;
+  object-position: center 42%;
 }
 
 .video-panel {
