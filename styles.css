@@ -313,6 +313,62 @@ main {
   color: var(--text);
 }
 
+.share-menu {
+  position: absolute;
+  z-index: 30;
+  width: min(230px, calc(100vw - 32px));
+  padding: 8px;
+  border: 1px solid rgba(81, 239, 203, 0.32);
+  border-radius: 8px;
+  background: #171a21;
+  box-shadow: 0 20px 54px rgba(0, 0, 0, 0.42);
+}
+
+.share-menu::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 28px;
+  width: 12px;
+  height: 12px;
+  border-top: 1px solid rgba(81, 239, 203, 0.32);
+  border-left: 1px solid rgba(81, 239, 203, 0.32);
+  background: #171a21;
+  transform: rotate(45deg);
+}
+
+.share-menu-item {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  padding: 10px 12px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.share-menu-item:hover,
+.share-menu-item:focus {
+  background: rgba(81, 239, 203, 0.1);
+  color: var(--accent);
+  outline: none;
+}
+
+.share-menu-status {
+  min-height: 18px;
+  padding: 6px 12px 2px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .text-muted {
   color: var(--muted);
   font-size: 14px;

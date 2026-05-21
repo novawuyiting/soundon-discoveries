@@ -62,54 +62,177 @@ youtubeLinks.forEach((link) => {
   });
 });
 
+let activeShareMenu = null;
+
+function closeShareMenu() {
+  if (!activeShareMenu) {
+    return;
+  }
+
+  activeShareMenu.remove();
+  activeShareMenu = null;
+}
+
+function trackShareAction({ playlist, clickArea, shareUrl, destination }) {
+  const event = {
+    event: "playlist_share_click",
+    playlist,
+    area: clickArea,
+    path: window.location.pathname,
+    share_url: shareUrl,
+    share_destination: destination,
+    timestamp: new Date().toISOString()
+  };
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(event);
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "playlist_share_click", {
+      playlist,
+      click_area: clickArea,
+      page_path: window.location.pathname,
+      share_url: shareUrl,
+      share_destination: destination
+    });
+  }
+}
+
+function setShareStatus(menu, message) {
+  const status = menu.querySelector(".share-menu-status");
+  if (!status) {
+    return;
+  }
+
+  status.textContent = message;
+}
+
+async function copyShareText(text, menu, successMessage) {
+  try {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.append(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+    setShareStatus(menu, successMessage);
+  } catch (error) {
+    setShareStatus(menu, "Copy failed");
+  }
+}
+
+function createShareMenuItem(label, type) {
+  const element = document.createElement(type === "link" ? "a" : "button");
+  element.className = "share-menu-item";
+  element.textContent = label;
+
+  if (type !== "link") {
+    element.type = "button";
+  }
+
+  return element;
+}
+
 shareLinks.forEach((button) => {
-  button.addEventListener("click", async () => {
+  button.addEventListener("click", (clickEvent) => {
+    clickEvent.stopPropagation();
+
     const playlist = button.dataset.playlist || "unknown";
     const clickArea = button.dataset.clickArea || "unknown";
     const shareUrl = button.dataset.shareUrl || window.location.href;
     const shareTitle = button.dataset.shareTitle || document.title;
-    const event = {
-      event: "playlist_share_click",
-      playlist,
-      area: clickArea,
-      path: window.location.pathname,
-      share_url: shareUrl,
-      timestamp: new Date().toISOString()
-    };
+    const shareCaption = `${shareTitle}\n${shareUrl}`;
 
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(event);
+    if (activeShareMenu && activeShareMenu.dataset.sourceId === playlist) {
+      closeShareMenu();
+      return;
+    }
 
-    if (typeof window.gtag === "function") {
-      window.gtag("event", "playlist_share_click", {
-        playlist,
-        click_area: clickArea,
-        page_path: window.location.pathname,
-        share_url: shareUrl
+    closeShareMenu();
+    trackShareAction({ playlist, clickArea, shareUrl, destination: "open_menu" });
+
+    const menu = document.createElement("div");
+    menu.className = "share-menu";
+    menu.dataset.sourceId = playlist;
+    menu.setAttribute("role", "menu");
+    menu.addEventListener("click", (menuEvent) => {
+      menuEvent.stopPropagation();
+    });
+
+    const xLink = createShareMenuItem("Post to X", "link");
+    const xUrl = new URL("https://twitter.com/intent/tweet");
+    xUrl.searchParams.set("text", shareTitle);
+    xUrl.searchParams.set("url", shareUrl);
+    xLink.href = xUrl.toString();
+    xLink.target = "_blank";
+    xLink.rel = "noopener";
+    xLink.addEventListener("click", () => {
+      trackShareAction({ playlist, clickArea, shareUrl, destination: "x" });
+      closeShareMenu();
+    });
+
+    const copyCaptionButton = createShareMenuItem("Copy for IG/Threads", "button");
+    copyCaptionButton.addEventListener("click", () => {
+      trackShareAction({ playlist, clickArea, shareUrl, destination: "copy_caption" });
+      copyShareText(shareCaption, menu, "Caption copied");
+    });
+
+    const copyLinkButton = createShareMenuItem("Copy link", "button");
+    copyLinkButton.addEventListener("click", () => {
+      trackShareAction({ playlist, clickArea, shareUrl, destination: "copy_link" });
+      copyShareText(shareUrl, menu, "Link copied");
+    });
+
+    menu.append(xLink, copyCaptionButton, copyLinkButton);
+
+    if (navigator.share) {
+      const nativeButton = createShareMenuItem("More share options", "button");
+      nativeButton.addEventListener("click", async () => {
+        trackShareAction({ playlist, clickArea, shareUrl, destination: "native" });
+
+        try {
+          await navigator.share({
+            title: shareTitle,
+            url: shareUrl
+          });
+          closeShareMenu();
+        } catch (error) {
+          setShareStatus(menu, "Share canceled");
+        }
       });
+      menu.append(nativeButton);
     }
 
-    const originalText = button.textContent;
+    const status = document.createElement("div");
+    status.className = "share-menu-status";
+    status.setAttribute("aria-live", "polite");
+    menu.append(status);
 
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: shareTitle,
-          url: shareUrl
-        });
-        return;
-      }
+    document.body.append(menu);
 
-      await navigator.clipboard.writeText(shareUrl);
-      button.textContent = "Copied";
-      button.classList.add("is-copied");
-    } catch (error) {
-      button.textContent = "Copy failed";
-    }
+    const rect = button.getBoundingClientRect();
+    const menuWidth = 230;
+    const left = Math.min(
+      rect.left + window.scrollX,
+      window.scrollX + window.innerWidth - menuWidth - 16
+    );
+    menu.style.left = `${Math.max(window.scrollX + 16, left)}px`;
+    menu.style.top = `${rect.bottom + window.scrollY + 10}px`;
 
-    window.setTimeout(() => {
-      button.textContent = originalText;
-      button.classList.remove("is-copied");
-    }, 1800);
+    activeShareMenu = menu;
   });
+});
+
+document.addEventListener("click", closeShareMenu);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeShareMenu();
+  }
 });
