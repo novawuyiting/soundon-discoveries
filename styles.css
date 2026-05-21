@@ -380,6 +380,23 @@ main {
   min-height: 220px;
 }
 
+.phonk-panel {
+  border-color: rgba(85, 240, 196, 0.28);
+}
+
+.phonk-cover-preview {
+  padding: 0 24px;
+}
+
+.phonk-cover-preview img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(85, 240, 196, 0.26);
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .video-panel {
   border-color: rgba(255, 106, 95, 0.32);
 }
