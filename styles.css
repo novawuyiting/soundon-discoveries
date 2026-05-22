@@ -445,6 +445,58 @@ main {
   font-size: 14px;
 }
 
+.featured-track-section p {
+  max-width: 860px;
+}
+
+.featured-track-list {
+  max-width: 920px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--panel-strong), rgba(21, 23, 29, 0.72));
+}
+
+.featured-track-list li {
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 22px;
+  align-items: center;
+  padding: 16px 22px;
+  border-top: 1px solid var(--line);
+}
+
+.featured-track-list li:first-child {
+  border-top: 0;
+}
+
+.featured-track-list strong,
+.featured-track-list em {
+  display: block;
+  font-style: normal;
+}
+
+.featured-track-list strong {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.featured-track-list em,
+.featured-track-list time {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.featured-track-list li > span:last-child {
+  min-width: 92px;
+  text-align: right;
+}
+
 .future-panel {
   min-height: 220px;
 }
@@ -609,6 +661,16 @@ footer {
   .embed-grid,
   .intent-grid {
     grid-template-columns: 1fr;
+  }
+
+  .featured-track-list li {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .featured-track-list li > span:last-child {
+    min-width: 0;
+    text-align: left;
   }
 
   .mini-player-top {
