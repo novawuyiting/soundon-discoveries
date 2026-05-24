@@ -1,0 +1,67 @@
+name: Lyric Videos
+
+on:
+  workflow_dispatch:
+    inputs:
+      render_tiktok:
+        description: Render the 15s vertical TikTok/Shorts cut
+        required: true
+        default: true
+        type: boolean
+      render_youtube:
+        description: Render the full length YouTube lyric video
+        required: true
+        default: true
+        type: boolean
+  push:
+    paths:
+      - ".github/workflows/lyric-videos.yml"
+      - "lyric-video-workflow/**"
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    name: Render lyric video exports
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lyric-video-workflow
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check input data
+        run: node scripts/check-inputs.mjs
+
+      - name: Ensure render directory exists
+        run: mkdir -p renders
+
+      - name: Render TikTok lyric video
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.render_tiktok }}
+        uses: hyperframes/render-action@v1
+        with:
+          composition: lyric-video-workflow/templates/tiktok-15s.html
+          out: lyric-video-workflow/renders/tiktok-15s.mp4
+
+      - name: Render YouTube lyric video
+        if: ${{ github.event_name != 'workflow_dispatch' || inputs.render_youtube }}
+        uses: hyperframes/render-action@v1
+        with:
+          composition: lyric-video-workflow/templates/youtube-full.html
+          out: lyric-video-workflow/renders/youtube-full.mp4
+
+      - name: Upload rendered videos
+        uses: actions/upload-artifact@v4
+        with:
+          name: lyric-video-renders
+          path: lyric-video-workflow/renders/*.mp4
+          if-no-files-found: error
+          retention-days: 14

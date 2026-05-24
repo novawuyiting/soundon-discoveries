@@ -382,6 +382,48 @@ main {
   text-decoration: none;
 }
 
+.related-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.conversion-band {
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  align-items: center;
+  margin: 0 0 72px;
+  padding: 26px;
+  border: 1px solid rgba(85, 240, 196, 0.32);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(85, 240, 196, 0.12), transparent 42%),
+    linear-gradient(180deg, var(--panel-strong), rgba(21, 23, 29, 0.78));
+}
+
+.conversion-band h2 {
+  max-width: 680px;
+  margin: 0;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.05;
+}
+
+.conversion-band p {
+  max-width: 680px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.conversion-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
 .embed-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -661,6 +703,15 @@ footer {
   .embed-grid,
   .intent-grid {
     grid-template-columns: 1fr;
+  }
+
+  .conversion-band {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .conversion-actions {
+    justify-content: flex-start;
   }
 
   .featured-track-list li {
