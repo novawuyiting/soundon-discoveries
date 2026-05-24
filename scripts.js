@@ -36,10 +36,12 @@ youtubeLinks.forEach((link) => {
   link.addEventListener("click", () => {
     const playlist = link.dataset.playlist || "unknown";
     const clickArea = link.dataset.clickArea || "unknown";
+    const entryTrack = link.dataset.track || "";
     const event = {
       event: "youtube_playlist_click",
       playlist,
       area: clickArea,
+      entry_track: entryTrack,
       path: window.location.pathname,
       timestamp: new Date().toISOString()
     };
@@ -51,6 +53,7 @@ youtubeLinks.forEach((link) => {
       window.gtag("event", "youtube_playlist_click", {
         playlist,
         click_area: clickArea,
+        entry_track: entryTrack,
         page_path: window.location.pathname,
         link_url: link.href
       });
@@ -236,3 +239,156 @@ document.addEventListener("keydown", (event) => {
     closeShareMenu();
   }
 });
+
+const visualizerFrame = document.querySelector(".visualizer-frame");
+const visualizerTitleInput = document.querySelector("#visualizer-title-input");
+const visualizerArtistInput = document.querySelector("#visualizer-artist-input");
+const visualizerTitle = document.querySelector("#preview-title");
+const visualizerArtist = document.querySelector("#preview-artist");
+const templateCards = document.querySelectorAll(".template-card");
+const visualizerSwatches = document.querySelectorAll(".swatch");
+const visualizerSliders = document.querySelectorAll(".visualizer-slider");
+const exportButtons = document.querySelectorAll(".export-button");
+const exportStatus = document.querySelector("#export-status");
+
+function trackVisualizerAction(action, detail = {}) {
+  const event = {
+    event: "phonk_visualizer_action",
+    action,
+    path: window.location.pathname,
+    timestamp: new Date().toISOString(),
+    ...detail
+  };
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(event);
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "phonk_visualizer_action", {
+      action,
+      page_path: window.location.pathname,
+      ...detail
+    });
+  }
+}
+
+function syncVisualizerText() {
+  if (!visualizerTitleInput || !visualizerArtistInput || !visualizerTitle || !visualizerArtist) {
+    return;
+  }
+
+  visualizerTitle.textContent = visualizerTitleInput.value.trim() || "UNTITLED PHONK";
+  visualizerArtist.textContent = visualizerArtistInput.value.trim() || "Artist name";
+}
+
+function setVisualizerTemplate(template) {
+  if (!visualizerFrame) {
+    return;
+  }
+
+  visualizerFrame.dataset.template = template;
+  templateCards.forEach((card) => {
+    card.classList.toggle("is-active", card.dataset.template === template);
+  });
+  trackVisualizerAction("template_select", { template });
+}
+
+function setVisualizerAccent(accent) {
+  if (!visualizerFrame) {
+    return;
+  }
+
+  visualizerFrame.style.setProperty("--accent", accent);
+  visualizerFrame.style.setProperty("--accent-2", accent);
+  visualizerSwatches.forEach((swatch) => {
+    swatch.classList.toggle("is-active", swatch.dataset.accent === accent);
+  });
+  trackVisualizerAction("accent_select", { accent });
+}
+
+function setVisualizerSlider(slider) {
+  if (!visualizerFrame) {
+    return;
+  }
+
+  const numericValue = Number(slider.value);
+  const cssValue = slider.dataset.setting === "smoke"
+    ? (numericValue / 10).toFixed(2)
+    : (0.7 + numericValue / 10).toFixed(2);
+
+  visualizerFrame.style.setProperty(`--${slider.dataset.setting}`, cssValue);
+}
+
+function createExportCopy(type) {
+  const title = visualizerTitle?.textContent || "LUNA VEM";
+  const artist = visualizerArtist?.textContent || "Dj Samir, ANMANE, Habazane";
+  const template = visualizerFrame?.dataset.template || "drift";
+
+  if (type === "thumbnail") {
+    return `${title} by ${artist}: ${template} phonk thumbnail with circular spectrum ring, night highway light trails, hard red/green accent, and Spotify playlist CTA.`;
+  }
+
+  if (type === "shorts") {
+    return `${title} - ${artist}\nHard phonk loop for drift edits, gym clips, and night drive energy.\nListen to Drift Phonk & Gym Phonk 2026: https://open.spotify.com/playlist/5i0emMXxWp8ljjo1VIffMW`;
+  }
+
+  return `${title} by ${artist}: 60-minute YouTube visualizer loop, ${template} template, animated spectrum ring, pulse meter, smoke pass, and description link to the Drift Phonk & Gym Phonk 2026 Spotify playlist.`;
+}
+
+async function copyExport(type) {
+  const exportCopy = createExportCopy(type);
+
+  try {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(exportCopy);
+      exportStatus.textContent = `${type} copy copied.`;
+    } else {
+      exportStatus.textContent = exportCopy;
+    }
+  } catch (error) {
+    exportStatus.textContent = exportCopy;
+  }
+
+  trackVisualizerAction("export_copy", {
+    export_type: type,
+    template: visualizerFrame?.dataset.template || "unknown"
+  });
+}
+
+if (visualizerFrame) {
+  syncVisualizerText();
+  visualizerSliders.forEach(setVisualizerSlider);
+
+  visualizerTitleInput?.addEventListener("input", syncVisualizerText);
+  visualizerArtistInput?.addEventListener("input", syncVisualizerText);
+
+  templateCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      setVisualizerTemplate(card.dataset.template);
+    });
+  });
+
+  visualizerSwatches.forEach((swatch) => {
+    swatch.addEventListener("click", () => {
+      setVisualizerAccent(swatch.dataset.accent);
+    });
+  });
+
+  visualizerSliders.forEach((slider) => {
+    slider.addEventListener("input", () => {
+      setVisualizerSlider(slider);
+    });
+    slider.addEventListener("change", () => {
+      trackVisualizerAction("slider_change", {
+        setting: slider.dataset.setting,
+        value: slider.value
+      });
+    });
+  });
+
+  exportButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      copyExport(button.dataset.export);
+    });
+  });
+}
