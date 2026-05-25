@@ -256,6 +256,7 @@ main {
 .copy-section,
 .method-section,
 .related-section,
+.updates-section,
 .featured-playlists {
   border-top: 1px solid var(--line);
   padding: 72px 0;
@@ -265,6 +266,7 @@ main {
 .copy-section h2,
 .section-heading h2,
 .related-section h2,
+.updates-section h2,
 .featured-playlists h2 {
   max-width: 780px;
   margin: 0;
@@ -453,6 +455,63 @@ main {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   margin-top: 34px;
+}
+
+.updates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.updates-card {
+  min-height: 260px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  background:
+    linear-gradient(135deg, rgba(85, 240, 196, 0.08), transparent 42%),
+    linear-gradient(180deg, var(--panel-strong), rgba(21, 23, 29, 0.72));
+}
+
+.updates-card h3 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.12;
+}
+
+.updates-card p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.updates-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.updates-link-list a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border: 1px solid rgba(85, 240, 196, 0.28);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.updates-link-list a:hover,
+.updates-link-list a:focus {
+  border-color: rgba(85, 240, 196, 0.62);
+  background: rgba(85, 240, 196, 0.08);
+  outline: none;
 }
 
 .embed-panel {
